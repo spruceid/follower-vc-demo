@@ -1,0 +1,12 @@
+[package]
+name = 'follower-demo'
+version = '0.1.0'
+edition = '2021'
+
+[dependencies]
+anyhow = "1.0.51"
+walkdir = "2"
+
+[dependencies.siwe]
+path = '../siwe-rs'
+
