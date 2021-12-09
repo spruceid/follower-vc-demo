@@ -1,5 +1,7 @@
 use anyhow::{anyhow, Result};
+use didkit::{JWTOrLDPOptions, ProofFormat};
 use siwe::eip4361::*;
+use ssi::vc::Credential;
 use std::fs::{create_dir_all, read_to_string};
 use std::io::prelude::*;
 use std::path::Path;
@@ -38,6 +40,24 @@ fn stat_base(base: &Path) -> Result<()> {
     };
 
     Ok(())
+}
+
+async fn verify_credential(vc_string: String, proof_options: String) -> Result<String, Error> {
+    let options: JWTOrLDPOptions = serde_json::from_str(&proof_options)?;
+    let proof_format = options.proof_format.unwrap_or_default();
+    let resolver = DID_METHODS.to_resolver();
+    let result = match proof_format {
+        ProofFormat::JWT => {
+            Credential::verify_jwt(&vc_string, Some(options.ldp_options), resolver).await
+        }
+        ProofFormat::LDP => {
+            let vc = Credential::from_json_unsigned(&vc_string)?;
+            vc.verify(Some(options.ldp_options), resolver).await
+        }
+        _ => Err(anyhow!(proof_format.to_string()))?,
+    };
+    let result_json = serde_json::to_string(&result)?;
+    Ok(result_json)
 }
 
 fn login(message: Message) -> Result<User> {
@@ -101,12 +121,24 @@ fn valid_vc_addresses(p: &Path) -> Vec<String> {
     WalkDir::new(p)
         .into_iter()
         .filter_map(|entry| entry.ok())
+        // TODO: Turn into filter_map:
         .filter(|entry| match entry.metadata() {
+            // TODO: Check for .json ext
             Err(_) => false,
             Ok(m) => match m.is_file() {
                 false => false,
                 // TODO: Add VC serialization and validation here.
-                _ => true,
+                _ => match read_to_string(p.join(Path::new(entry.file_name()))) {
+                    Err(_) => false,
+                    Ok(m) => {
+                        let vc: Credential = match serde_json::from_str(&m) {
+                            Ok(x) => x,
+                            Err(_) => return false,
+                        };
+
+                        true
+                    }
+                },
             },
         })
         .filter_map(|entry| entry.file_name().to_str())

@@ -4,9 +4,20 @@ version = '0.1.0'
 edition = '2021'
 
 [dependencies]
-anyhow = "1.0.51"
-walkdir = "2"
+anyhow = '1.0.51'
+didkit = '0.3.0'
+serde_json = '1.0.72'
+walkdir = '2'
+
+[dependencies.serde]
+version = '1.0'
+features = ['derive']
+
+[dependencies.ssi]
+path = '../ssi'
 
 [dependencies.siwe]
 path = '../siwe-rs'
-
+[dev-dependencies.url]
+version = '2.2'
+features = ['serde']
