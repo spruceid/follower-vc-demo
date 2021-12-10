@@ -1,9 +1,17 @@
 use chrono::{SecondsFormat, Utc};
 use uuid::Uuid;
 
+pub enum VCFollower {
+    Block,
+    Follow,
+    Post, 
+    Read
+}
+
 fn main() {
     println!("Hello, world!");
 }
+
 
 fn blocks(blocker: String, blockee: String) -> String {
     format!(
