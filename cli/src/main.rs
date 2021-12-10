@@ -9,21 +9,23 @@ fn blocks(blocker: String, blockee: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "blockee": "/",
-              "blocker": "/"
+              "blockee": "http://example.com",
+              "blocker": "http://example.com"
           }}
       ],
       "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
-          "blockee": {},
-          "blocker": {}
+          "id": "{}",
+          "blockee": "{}",
+          "blocker": "{}"
       }},
-      "issuer": {}
+      "issuer": "{}"
     }}"##,
         Utc::now().to_rfc3339_opts(SecondsFormat::Millis, true),
         Uuid::new_v4().to_string(),
+        blocker,
         blockee,
         blocker,
         blocker,
@@ -36,21 +38,23 @@ fn follows(follower: String, followee: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "followee": "/",
-              "follower": "/"
+              "followee": "http://example.com/",
+              "follower": "http://example.com/"
           }}
       ],
       "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
-          "followee": {},
-          "follower": {}
+          "id": "{}",
+          "followee": "{}",
+          "follower": "{}"
       }},
-      "issuer": {}
+      "issuer": "{}"
     }}"##,
         Utc::now().to_rfc3339_opts(SecondsFormat::Millis, true),
         Uuid::new_v4().to_string(),
+        follower,
         followee,
         follower,
         follower,
@@ -63,25 +67,27 @@ fn post(poster: String, body: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "body": "/",
-              "network: "/",
-              "poster": "/",
-              "topic": "/"
+              "body": "http://example.com",
+              "network": "http://example.com",
+              "poster": "http://example.com",
+              "topic": "http://example.com"
           }}
       ],
       "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
-          "body": {},
+          "id": "{}",
+          "body": "{}",
           "network": "example platform",
-          "poster": {},
+          "poster": "{}",
           "topic": "example topic"
       }},
-      "issuer": {}
+      "issuer": "{}"
     }}"##,
         Utc::now().to_rfc3339_opts(SecondsFormat::Millis, true),
         Uuid::new_v4().to_string(),
+        poster,
         body,
         poster,
         poster,
