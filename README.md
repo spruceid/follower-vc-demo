@@ -12,6 +12,8 @@ To set up some basic users and relationships:
 $ ./setup.sh
 ```
 
+If no errors are reported in the `errors` array in the output, then three valid VCs (one for "follow"ing, one for "block"ing, and one for "post"ing) have been created.
+
 Now you can use the CLI to read the VCs:
 ```bash
 $ vc-follow read follow.json
@@ -41,30 +43,31 @@ $ didkit generate-ed25519-key > blocked.jwk
 
 2. Make the follow credential statement:
 ```bash
-$ vc-follow follow --subject=$(didkit key-to-did key -k follower.jwk) --follows=$(didkit key-to-did key -k followee.jwk) > unsigned_follow.json
+$ vc-follow follow $(didkit key-to-did key -k follower.jwk) $(didkit key-to-did key -k followee.jwk) > unsigned_follow.json
 ```
 The block credential statement:
 ```bash
-$ vc-follow block --subject=$(didkit key-to-did key -k follower.jwk) --blocks=$(didkit key-to-did key -k blocked.jwk) > unsigned_block.json
+$ vc-follow block $(didkit key-to-did key -k follower.jwk) $(didkit key-to-did key -k blocked.jwk) > unsigned_block.json
 ```
 And the post statement.
 ```bash
-$ vc-follow post --subject=$(didkit key-to-did key -k follower.jwk) --text=hello_world > unsigned_post.json
+$ vc-follow post $(didkit key-to-did key -k follower.jwk) hello_world > unsigned_post.json
 ```
 
 3. Then sign them all:
 ```bash
 $ didkit vc-issue-credential --key-path follower.jwk \
-                             -v "${$(didkit key-to-verification key --key-path follower.jwk)}" -p asserMethod \
+                             -v $(didkit key-to-verification-method key --key-path follower.jwk) -p assertionMethod \
                              <unsigned_follow.json > follow.json
 
 $ didkit vc-issue-credential --key-path follower.jwk \
-                             -v "${$(didkit key-to-verification key --key-path follower.jwk)}" -p asserMethod \
+                             -v $(didkit key-to-verification-method key --key-path follower.jwk) -p assertionMethod \
                              <unsigned_block.json > block.json
 
 $ didkit vc-issue-credential --key-path follower.jwk \
-                             -v "${$(didkit key-to-verification key --key-path follower.jwk)}" -p asserMethod \
+                             -v $(didkit key-to-verification-method key --key-path follower.jwk) -p assertionMethod \
                              <unsigned_post.json > post.json
+
 ```
 
 4. Verify their authenticity:

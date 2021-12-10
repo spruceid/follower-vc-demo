@@ -18,6 +18,6 @@ didkit vc-issue-credential --key-path follower.jwk \
                              -v $(didkit key-to-verification-method key --key-path follower.jwk) -p assertionMethod \
                              <unsigned_post.json > post.json
 
-# didkit vc-verify-credential < follow.json
-# didkit vc-verify-credential < block.json
-# didkit vc-verify-credential < post.json
+didkit vc-verify-credential < follow.json
+didkit vc-verify-credential < block.json
+didkit vc-verify-credential < post.json
