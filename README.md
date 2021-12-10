@@ -119,16 +119,16 @@ Block
     "schema": {
         "$id": "rebase-block-1.0"
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "description": "Follow",
+        "description": "Block",
         "type": "object",
         "properties": {
             "blockee": {
                 "type": "string",
-                "description": "The [EVM] BlockchainAddress of the blockee"
+                 "description": "A followee referenced by URI such as blockchainAddress, DID, etc"
             },
             "blocker": {
                 "type": "string",
-                "description": "The [EVM] BlockchainAddress of the blocker"
+                 "description": "A followee referenced by URI such as blockchainAddress, DID, etc"
             }
         },
         "required": [
@@ -149,7 +149,7 @@ Post
     "authored": "2021-12-07T22:33:04.309Z",
     "name": "Rebase Post",
     "schema": {
-        "$id": "rebase-follow-1.0"
+        "$id": "rebase-post-1.0"
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "description": "Post",
         "type": "object",

@@ -8,11 +8,6 @@ pub enum VCFollower {
     Read
 }
 
-fn main() {
-    println!("Hello, world!");
-}
-
-
 fn blocks(blocker: String, blockee: String) -> String {
     format!(
         r##"{{
@@ -96,4 +91,8 @@ fn post(poster: String, body: String) -> String {
         poster,
         poster,
     )
+}
+
+fn main() {
+    println!("Hello, world!");
 }
