@@ -1,12 +1,7 @@
 use chrono::{SecondsFormat, Utc};
+use std::path::Path;
+use structopt::{clap::AppSettings, clap::ArgGroup, StructOpt};
 use uuid::Uuid;
-
-pub enum VCFollower {
-    Block,
-    Follow,
-    Post, 
-    Read
-}
 
 fn blocks(blocker: String, blockee: String) -> String {
     format!(
@@ -15,15 +10,15 @@ fn blocks(blocker: String, blockee: String) -> String {
           "https://www.w3.org/2018/credentials/v1",
           {{
               "blockee": "/",
-              "blocker": "/",
+              "blocker": "/"
           }}
       ],
-      "issuanceDate": {},
+      "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
-          "blockee": {}
-          "blocker": {},
+          "blockee": {},
+          "blocker": {}
       }},
       "issuer": {}
     }}"##,
@@ -42,10 +37,10 @@ fn follows(follower: String, followee: String) -> String {
           "https://www.w3.org/2018/credentials/v1",
           {{
               "followee": "/",
-              "follower": "/",
+              "follower": "/"
           }}
       ],
-      "issuanceDate": {},
+      "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
@@ -71,16 +66,16 @@ fn post(poster: String, body: String) -> String {
               "body": "/",
               "network: "/",
               "poster": "/",
-              "topic": "/",
+              "topic": "/"
           }}
       ],
-      "issuanceDate": {},
+      "issuanceDate": "{}",
       "id": "urn:uuid:{}",
       "type": ["VerifiableCredential"],
       "credentialSubject": {{
           "body": {},
           "network": "example platform",
-          "poster": {}
+          "poster": {},
           "topic": "example topic"
       }},
       "issuer": {}
@@ -93,6 +88,28 @@ fn post(poster: String, body: String) -> String {
     )
 }
 
+#[derive(StructOpt, Debug)]
+pub enum VCFollower {
+    Block { subject: String, blockee: String },
+    Follow { subject: String, followee: String },
+    Post { subject: String, body: String },
+    Read { path: String },
+}
+
 fn main() {
-    println!("Hello, world!");
+    let opt = VCFollower::from_args();
+    match opt {
+        VCFollower::Block { subject, blockee } => {
+            println!("{}", blocks(subject, blockee))
+        }
+        VCFollower::Follow { subject, followee } => {
+            println!("{}", follows(subject, followee))
+        }
+        VCFollower::Post { subject, body } => {
+            println!("{}", post(subject, body))
+        }
+        _ => {
+            panic!("Implement!")
+        }
+    }
 }
