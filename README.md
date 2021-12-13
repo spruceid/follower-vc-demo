@@ -28,8 +28,8 @@ You can also add additional relations, this would be one way to:
 (TODO: Make an easier way)
 ```bash
 $ didkit vc-issue-credential --key-path block.jwk \
-                             -v "${$(didkit key-to-verification key --key-path block.jwk)}" -p asserMethod \
-                             <$(vc-follow block --subject=$(didkit key-to-did key -k block.jwk) --blocks=$(didkit key-to-did key -k follower.jwk)) > block2.json \ 
+                             -v $(didkit key-to-verification-method key --key-path block.jwk) -p assertionMethod \
+                             <$(vc-follow block $(didkit key-to-did key -k block.jwk) $(didkit key-to-did key -k follower.jwk)) > block2.json \ 
                              && didkit vc-verify-credential < block2.json && vc-follow read block2.json
 ```
 
