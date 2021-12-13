@@ -1,8 +1,15 @@
 # Social graph data as Verifiable Credentials
 
-Prerequisites: `cargo` and `didkit`. `didkit` can be installed with `cargo`.
+## Quickstart
 
-This repo contains a small CLI that will need to be installed, will install as vc-follow. Install it like so from the root of the repo.
+Prerequisites: 
+- `cargo` and `didkit`. 
+- WSL2 users may need to install `pkg-config` or another standard library for some dependencies like `openssl`.
+- `didkit` can be installed by running `cargo install didkit-cli` from the root directory.
+
+This repo contains a small CLI that will need to be installed, will install as `vc-follow`. 
+
+Install it like so from the root of the repo:
 ```bash
 $ cargo install --path ./cli
 ```
@@ -12,7 +19,12 @@ To set up some basic users and relationships:
 $ ./setup.sh
 ```
 
-If no errors are reported in the `errors` array in the output, then three valid VCs (one for "follow"ing, one for "block"ing, and one for "post"ing) have been created.
+If no errors are reported in the `errors` array in the output, then three valid VCs will been created:
+- `follow.json` represents a "follow" action as a VC
+- `block.json` represents a "block" action as a VC
+- `post.json` represents a "post" action as a VC
+- In all three, "Alice" and "Bob" are represented by Ethereum accounts: 
+
 
 Now you can use the CLI to read the VCs:
 ```bash
@@ -24,14 +36,9 @@ $ vc-follow read post.json
 # "${follower.jwk} posted hello_world
 ```
 
-You can also add additional relations, this would be one way to:
-(TODO: Make an easier way)
-```bash
-$ didkit vc-issue-credential --key-path block.jwk \
-                             -v $(didkit key-to-verification-method key --key-path block.jwk) -p assertionMethod \
-                             <$(vc-follow block $(didkit key-to-did key -k block.jwk) $(didkit key-to-did key -k follower.jwk)) > block2.json \ 
-                             && didkit vc-verify-credential < block2.json && vc-follow read block2.json
-```
+The `/example/` folder contents are provided for reference, and will be overwritten with fresh credentials with updated ephemeral keys and timestamps each time `setup.sh` is run.
+
+## Setup.sh step-by-step
 
 To understand what ths is doing, here is what `setup.sh` does:
 1. Make the keys, from the root of the repo:
@@ -173,4 +180,18 @@ Post
         "additionalProperties": true
     }
 }
+```
+
+### Further work
+
+To-do list:
+- build out proper JSON-LD Context
+- replace arbitrary ephemeral keys with session keys derived from `credentialSubject.id`s  expressed as blockchain addresses (i.e. did:pkh instead of did:key)
+- add option for additional relations
+
+```bash
+$ didkit vc-issue-credential --key-path block.jwk \
+                             -v $(didkit key-to-verification-method key --key-path block.jwk) -p assertionMethod \
+                             <$(vc-follow block $(didkit key-to-did key -k block.jwk) $(didkit key-to-did key -k follower.jwk)) > block2.json \ 
+                             && didkit vc-verify-credential < block2.json && vc-follow read block2.json
 ```
