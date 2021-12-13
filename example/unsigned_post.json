@@ -1,0 +1,22 @@
+{
+      "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          {
+              "body": "http://example.com",
+              "network": "http://example.com",
+              "poster": "http://example.com",
+              "topic": "http://example.com"
+          }
+      ],
+      "issuanceDate": "2021-12-13T16:39:02.659Z",
+      "id": "urn:uuid:f33f8521-e5ec-49c7-8c3e-07135ae19100",
+      "type": ["VerifiableCredential"],
+      "credentialSubject": {
+          "id": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH",
+          "body": "hello_world",
+          "network": "example platform",
+          "poster": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH",
+          "topic": "example topic"
+      },
+      "issuer": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH"
+    }

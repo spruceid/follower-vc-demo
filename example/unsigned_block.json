@@ -1,0 +1,18 @@
+{
+      "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          {
+              "blockee": "http://example.com",
+              "blocker": "http://example.com"
+          }
+      ],
+      "issuanceDate": "2021-12-13T16:39:02.653Z",
+      "id": "urn:uuid:5f259249-9d75-4d5a-9b48-eebe8c7fd687",
+      "type": ["VerifiableCredential"],
+      "credentialSubject": {
+          "id": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH",
+          "blockee": "did:key:z6Mkg7oYa3Sg5pxG1wLpQTFbDfukcPTeak1Z5XpNskh8kKU9",
+          "blocker": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH"
+      },
+      "issuer": "did:key:z6MkoJsU3LBUURqRMDKZagFpCvdLArSJcdsq6J4mfBcCnNRH"
+    }
