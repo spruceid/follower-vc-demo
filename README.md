@@ -29,14 +29,14 @@ If no errors are reported in the `errors` array in the output, then three valid 
 Now you can use the CLI to read the VCs:
 ```bash
 $ vc-follow read follow.json
-# "${follower.jwk} follows ${followee.jwk}
+# "${follower.jwk} follows ${followee.jwk}"
 $ vc-follow read block.json
-# "${follower.jwk} blocks ${block.jwk}
+# "${follower.jwk} blocks ${block.jwk}"
 $ vc-follow read post.json
-# "${follower.jwk} posted hello_world
+# "${follower.jwk} posted hello_world"
 ```
 
-The `/example/` folder contents are provided for reference, and will be overwritten with fresh credentials with updated ephemeral keys and timestamps each time `setup.sh` is run.
+The `/example/` folder contents are provided for reference. Fresh credentials and keys can be generated in the top level directory each time `setup.sh` is run.
 
 ## Setup.sh step-by-step
 
