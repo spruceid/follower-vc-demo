@@ -15,8 +15,8 @@ fn blocks(blocker: String, blockee: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "blockee": "http://example.com",
-              "blocker": "http://example.com"
+              "blockee": "http://example.com/blockee",
+              "blocker": "http://example.com/blocker"
           }}
       ],
       "issuanceDate": "{}",
@@ -44,8 +44,8 @@ fn follows(follower: String, followee: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "followee": "http://example.com/",
-              "follower": "http://example.com/"
+              "followee": "http://example.com/followee",
+              "follower": "http://example.com/follower"
           }}
       ],
       "issuanceDate": "{}",
@@ -73,10 +73,10 @@ fn post(poster: String, body: String) -> String {
       "@context": [
           "https://www.w3.org/2018/credentials/v1",
           {{
-              "body": "http://example.com",
-              "network": "http://example.com",
-              "poster": "http://example.com",
-              "topic": "http://example.com"
+              "body": "http://example.com/body",
+              "network": "http://example.com/network",
+              "poster": "http://example.com/poster",
+              "topic": "http://example.com/topic"
           }}
       ],
       "issuanceDate": "{}",
@@ -175,8 +175,8 @@ fn main() {
         VCFollower::Read { path } => {
             match read(Path::new(&path)) {
                 Ok(_) => {}
-                Err(_) => println!("Failed to read VC")
+                Err(_) => println!("Failed to read VC"),
             };
-        },
+        }
     }
 }
